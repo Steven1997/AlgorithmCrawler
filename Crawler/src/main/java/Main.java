@@ -40,7 +40,7 @@ public class Main {
         //开8个线程爬取
         Thread th[] = new Thread[8];
         for(int i = 0;i < 8;i++){
-            th[i] = new Thread(new CrawlerThread((i + 1) * 1000,(i + 1) * 1000 + 50));
+            th[i] = new Thread(new CrawlerThread((i + 2) * 500,(i + 2) * 500 + 500));
             th[i].start();
         }
     }
