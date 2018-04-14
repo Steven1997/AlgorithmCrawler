@@ -18,6 +18,7 @@ public class CrawlUtils {
             Document doc = Jsoup.connect("https://www.baidu.com/s?ie=utf-8&wd=HDU"
                     + pid + "CSDN博客").get();
             Elements elements = doc.select("h3.t");
+
             //处理公共资源，加锁
             synchronized(CrawlUtils.class){
                 List<String> arrayList = Main.getCandidate();
@@ -30,6 +31,7 @@ public class CrawlUtils {
                 System.out.println("HDU" + pid + "分析结果：");
                 //选取百度的前5个链接，分别解析
                 for (int k = 0;k < 5;k++) {
+
                     //如果题号不匹配，直接跳过该链接
                     if(!elements.get(k).text().contains(String.valueOf(pid)))
                         continue;
@@ -40,13 +42,13 @@ public class CrawlUtils {
                     //将文本和预先定义的算法集合进行匹配，统计不同算法出现次数
                     for (int i = 0;i < arrayList.size();i++) {
                         int start = 0;
-                        while(text.indexOf(arrayList.get(i),start) != -1){
+                        while(start < text.length() && text.indexOf(arrayList.get(i),start) != -1){
                             c[i].setOccurCount(c[i].getOccurCount() + 1);
                             start = text.indexOf(arrayList.get(i),start) + 1;
                         }
                     }
 
-            }
+                }
                 //按照出现次数从高到低排序
                 Arrays.sort(c, new Comparator<Category>() {
                     public int compare(Category o1, Category o2) {
